@@ -1,11 +1,12 @@
 // Core
-import React from 'react';
+import React, { Component } from 'react';
 import { Icon } from 'expo';
 
 // Constants
 import Colors from '../constants/Colors';
 
-export default class TabBarIcon extends React.Component {
+export default class TabBarIcon extends Component {
+
     render () {
         return (
             <Icon.Ionicons
@@ -16,4 +17,5 @@ export default class TabBarIcon extends React.Component {
             />
         );
     }
+
 }

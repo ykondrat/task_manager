@@ -1,6 +1,6 @@
 // Core
 import React, { Component } from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
+import { ScrollView, View, Text, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 
 // Components
@@ -26,7 +26,16 @@ export default class TodoListScreen extends Component {
 
         return (
             <ScrollView style = { styles.container }>
-                { tasks.map((task, index) => <Task key = { task.get('id') } index = { index } task = { task } />) }
+                <View>
+                    <Text style = { styles.text }>List of tasks to be performed</Text>
+                </View>
+                {
+                    tasks.map((task, index) => {
+                        if (!task.get('inprogress') && !task.get('completed')) {
+                            return (<Task key = { task.get('id') } index = { index } task = { task } />)
+                        }
+                    })
+                }
             </ScrollView>
         );
     }
@@ -38,5 +47,11 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingTop: 15,
         backgroundColor: '#fff',
+    },
+    text: {
+        textAlign: 'center',
+        fontWeight: 'bold',
+        fontSize: 20,
+        marginBottom: 15
     }
 });

@@ -1,10 +1,22 @@
 // Core
-import { List, fromJS } from 'immutable';
-
+import { Map, List, fromJS } from 'immutable';
+import { v4 } from 'uuid';
+import moment from 'moment';
 // Types
 import { types } from './types';
-
-const initialState = List();
+const task = Map({
+    id: v4(),
+    created: moment(),
+    updated: null,
+    started: null,
+    ended: null,
+    inprogress: false,
+    completed: false,
+    important: false,
+    taskTitle: 'Test',
+    task: 'Create test task'
+})
+const initialState = List().push(task);
 
 const findTasksIndex = (state, taskId) => {
     const index = state.findIndex((task) => task.get('id') === taskId);

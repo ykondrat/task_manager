@@ -50,7 +50,9 @@ export default class Task extends Component {
     }
 
     _handleEdit = () => {
-        this.setState({ editing: true });
+        const { editing } = this.state;
+
+        this.setState({ editing: !editing });
     }
 
     _handleModal = () => {
@@ -61,6 +63,17 @@ export default class Task extends Component {
         const { task, actions } = this.props;
 
         actions.removeTask(task.get('id'));
+    }
+
+    _handleImportant = () => {
+        const { task, actions } = this.props;
+        const updatedTask = task.set('important', !task.get('important'));
+
+        actions.updateTask(updatedTask);
+    }
+
+    _handleStartTask = () => {
+
     }
 
     _handleForm = () => {
@@ -159,32 +172,26 @@ export default class Task extends Component {
                 </View>
 
 
-                <View>
+                <View style = { styles.actions }>
                     <Icon
+                        style = { styles.icon }
                         name = 'create'
-                        color= '#00aced'
+                        color= { editing ? '#9a73ef' : '#e3e3e3' }
                         onPress = { this._handleEdit }
                     />
-                    {
-                        task.get('important') ?
-                            <Icon
-                                name = 'star'
-                                color= '#00aced'
-                            />
-                        :
-                            <Icon
-                                name = 'star'
-                                color= '#00aced'
-                            />
-                    }
+                    <Icon
+                        name = 'star'
+                        color= { task.get('important') ? '#9a73ef' : '#e3e3e3' }
+                        onPress = { this._handleImportant }
+                    />
                     <Icon
                         name = 'forward'
-                        color= '#00aced'
-                        onPress={() => console.log('hello')}
+                        color = '#e3e3e3'
+                        onPress = { this._handleStartTask }
                     />
                     <Icon
                         name = 'delete'
-                        color= '#00aced'
+                        color= '#e3e3e3'
                         onPress = { this._handleDelete }
                     />
                 </View>
@@ -233,5 +240,11 @@ const styles = StyleSheet.create({
         color: 'white',
         textAlign: 'center',
         fontWeight: 'bold'
+    },
+    actions: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'flex-end'
     }
 });
